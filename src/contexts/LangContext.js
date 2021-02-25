@@ -1,73 +1,81 @@
 import React, { Component } from 'react';
 
 const LangContext = React.createContext({
-    language: {},
-    error: null,
-    words: [],
-    head: {},
-    response: {},
-    guess: '',
+  language: [],
+  error: null,
+  words: [],
+  head: [],
+  response: [],
+  guess: '',
 
-    setLanguage: () => {},
-    setWords: () => {},
-    setHead: () => {},
-    setResponse: () => {},
-    setGuess: () => {}
+  setLanguage: () => {},
+  setWords: () => {},
+  setHead: () => {},
+  setResponse: () => {},
+  setGuess: () => {},
+  setError: () => {},
+  clearError: () => {}
 });
 
 export default LangContext;
 
-export class LangProvider extends Component{
-    constructor(props){
-        super(props);
-        const state = {
-            language: {},
-            error: null,
-            words: []
-        };
-        this.state = state;
-    }
+export class LangProvider extends Component {
+  state = {
+    language: {},
+    error: null,
+    words: [],
+    head: [],
+  };
 
-    setLanguage = language => {
-        this.setState({language});
-    }
+  setLanguage = (language) => {
+    this.setState({ language });
+  };
 
-    setWords = words => {
-        this.setState({words});
-    }
+  setWords = (words) => {
+    this.setState({ words });
+  };
 
-    setHead = head => {
-        this.setState({head});
-    }
+  setHead = (head) => {
+    this.setState({ head });
+  };
 
-    setResponse = response => {
-        this.setState({response});
-    }
+  setResponse = (response) => {
+    this.setState({ response });
+  };
 
-    setGuess = guess => {
-        this.setState({guess});
-    }
+  setGuess = (guess) => {
+    this.setState({ guess });
+  };
 
-    render(){
+  setError = (error) => {
+      this.setState({ error });
+  }
 
-        const value = {
-            language: this.state.language,
-            error: this.state.error,
-            words: this.state.words,
-            head: this.state.head,
-            response: this.state.response,
-            guess: this.state.guess,
+  clearError = () => {
+      this.setState({ error: null });
+  }
 
-            setLanguage: this.setLanguage,
-            setWords: this.setWords,
-            setHead: this.setHead,
-            setResponse: this.setResponse,
-            setGuess: this.setGuess
-        }
-        return(
-            <LangContext.Provider value={value}>
-                {this.props.children}
-            </LangContext.Provider>
-        )
-    }
+  render() {
+    const value = {
+      language: this.state.language,
+      error: this.state.error,
+      words: this.state.words,
+      head: this.state.head,
+      response: this.state.response,
+      guess: this.state.guess,
+
+      setLanguage: this.setLanguage,
+      setWords: this.setWords,
+      setHead: this.setHead,
+      setResponse: this.setResponse,
+      setGuess: this.setGuess,
+      setError: this.setError,
+      clearError: this.clearError
+    };
+    return (
+      <LangContext.Provider value={value}>
+        {this.props.children}
+      </LangContext.Provider>
+    );
+  }
 }
