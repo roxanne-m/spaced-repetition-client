@@ -1,0 +1,18 @@
+main{
+    font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    margin: 25px;
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    background-color: #bfdbf7;
+    border: 2px solid black;
+  }
+
+  /* Desktop Styling */
+@media all and (min-width: 800px) {
+  main {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+}

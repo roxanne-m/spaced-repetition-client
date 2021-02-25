@@ -1,0 +1,9 @@
+.word-list-style{
+    line-height: 25px;
+    border: 2px solid black;
+  list-style-position:outside;
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+}
+

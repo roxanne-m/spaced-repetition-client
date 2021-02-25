@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 
 class LearningRoute extends Component {
+    state = {
+      
+    }
+
+
   render() {
     return (
       <section>
-        implement and style me
+        <h2>Translate the word:</h2>
       </section>
     );
   }
