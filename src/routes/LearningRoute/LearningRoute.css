@@ -1,0 +1,17 @@
+.DisplayScore {
+  text-decoration: underline;
+  font-size: larger;
+  border: 2px solid #168aad;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-radius: 25px;
+}
+
+.DisplayFeedback {
+  font-size: 20px;
+}
+
+.word-style {
+  font-size: 30px;
+  text-decoration: underline;
+}

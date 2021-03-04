@@ -1,24 +1,40 @@
 /* Header styling */
 
-header{
-    font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif
+header {
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS',
+    sans-serif;
 }
 h1 {
   padding: 25px;
   margin: 25px;
   text-align: center;
-  background-color: #b0c4b1;
-  border: 2px solid black;
+  background-color: #168aad;
+  border-radius: 25px;
+  border: 2px solid white;
 }
 
-
-nav {
+nav,
+.username-style {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin: 25px;
   padding: 15px;
   font-size: large;
-  border: 2px solid black;
-  background-color: #b0c4b1;
+  border-radius: 25px;
+  border: 2px solid white;
+  background-color: #168aad;
+}
+
+/* Desktop Styling */
+@media all and (min-width: 800px) {
+  nav,
+  .username-style {
+    padding: 15px;
+    font-size: x-large;
+  }
+
+  header {
+    margin: 60px;
+  }
 }

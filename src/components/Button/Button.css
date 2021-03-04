@@ -1,5 +1,5 @@
 button {
-  background-color: rgb(65, 65, 230); 
+  background-color: #fe7f2d;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -7,4 +7,5 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
+  border-radius: 25px;
 }

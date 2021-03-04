@@ -14,7 +14,7 @@ const LangContext = React.createContext({
   setResponse: () => {},
   setGuess: () => {},
   setError: () => {},
-  clearError: () => {}
+  clearError: () => {},
 });
 
 export default LangContext;
@@ -25,6 +25,7 @@ export class LangProvider extends Component {
     error: null,
     words: [],
     head: [],
+    response: [],
   };
 
   setLanguage = (language) => {
@@ -48,12 +49,12 @@ export class LangProvider extends Component {
   };
 
   setError = (error) => {
-      this.setState({ error });
-  }
+    this.setState({ error });
+  };
 
   clearError = () => {
-      this.setState({ error: null });
-  }
+    this.setState({ error: null });
+  };
 
   render() {
     const value = {
@@ -70,7 +71,7 @@ export class LangProvider extends Component {
       setResponse: this.setResponse,
       setGuess: this.setGuess,
       setError: this.setError,
-      clearError: this.clearError
+      clearError: this.clearError,
     };
     return (
       <LangContext.Provider value={value}>

@@ -1,18 +1,22 @@
-main{
-    font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-    margin: 25px;
-    padding: 25px;
-    display: flex;
-    flex-direction: row;
-    background-color: #bfdbf7;
-    border: 2px solid black;
-  }
+main {
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS',
+    sans-serif;
+  margin: 25px;
+  padding: 25px;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 25px;
+  text-align: center;
+}
 
-  /* Desktop Styling */
+/* Desktop Styling */
 @media all and (min-width: 800px) {
   main {
     justify-content: center;
     display: flex;
     flex-direction: column;
+    margin: 80px;
   }
 }

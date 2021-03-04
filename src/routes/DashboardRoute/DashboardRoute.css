@@ -1,9 +1,11 @@
-.word-list-style{
-    line-height: 25px;
-    border: 2px solid black;
-  list-style-position:outside;
-  background-color: white;
+.word-list-style {
+  line-height: 25px;
+  border: 2px solid white;
+  list-style-position: outside;
   text-align: center;
   padding: 20px;
+  border-radius: 25px;
+  background-color: #168aad;
+  color: white;
+  font-size: 20px;
 }
-
