@@ -9,7 +9,6 @@ class RegistrationRoute extends Component {
   };
 
   handleRegistrationSuccess = () => {
-    console.log('handle registration sucess f(x)');
     const { history } = this.props;
     history.push('/');
   };
