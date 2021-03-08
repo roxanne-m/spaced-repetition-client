@@ -8,9 +8,9 @@ h1 {
   padding: 25px;
   margin: 25px;
   text-align: center;
-  background-color: #168aad;
   border-radius: 25px;
-  border: 2px solid white;
+  border: 5px solid #168aad;
+  background-color: white;
 }
 
 nav,
@@ -22,8 +22,8 @@ nav,
   padding: 15px;
   font-size: large;
   border-radius: 25px;
-  border: 2px solid white;
-  background-color: #168aad;
+  border: 5px solid #168aad;
+  background-color: white;
 }
 
 /* Desktop Styling */
