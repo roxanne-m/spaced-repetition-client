@@ -12,10 +12,15 @@ class LearningRoute extends Component {
     guess: '',
     renderForm: true,
   };
-  componentDidMount() {
+  async componentDidMount() {
     this.context.clearError();
-    languageApiService.getLanguageHead().then((res) => {
+    await languageApiService.getLanguageHead().then((res) => {
       this.context.setHead(res);
+    });
+
+    await languageApiService.getWords().then((res) => {
+      this.context.setLanguage(res.language);
+      this.context.setWords(res.words);
     });
   }
 
@@ -29,29 +34,39 @@ class LearningRoute extends Component {
     languageApiService.postGuess(this.state.guess).then((res) => {
       this.context.setResponse(res);
       this.setState({ renderForm: false });
+
+      this.context.setTotalScore(res.totalScore); // updates total score
     });
   };
 
   handleNextWord = (e) => {
-    this.context.setHead(this.context.response); // set context head to response (not head)and setting as head
-    this.setState({ renderForm: true });
     this.context.setGuess('');
+    languageApiService.getLanguageHead().then((res) => {
+      this.context.setHead(res, () => this.setState({ renderForm: true }));
+    });
   };
 
   // Function to render form
   renderForm = () => {
     let { head } = this.context;
-    let headWord = head.nextWord;
-    let correctCount = head.wordCorrectCount;
-    let incorrectCount = head.wordIncorrectCount;
-    let totalScore = head.totalScore;
+    // let headWord;
+    let correctCount;
+    let incorrectCount;
+    // let totalScore;
+    if (head.nextWord) {
+      // headWord = head.original;
+      correctCount = head.wordCorrectCount;
+      incorrectCount = head.wordIncorrectCount;
+    }
+
     return (
       <section>
         <h2>Translate the word:</h2>
         <span>
-          <h3>{headWord}</h3>
+          <h3>{head.nextWord}</h3>
         </span>
-        <p>{`Your total score is: ${totalScore}`}</p>
+
+        <p>{`Your total score is: ${this.context.totalScore}`}</p>
         <form onSubmit={this.handleOnSubmit}>
           <Label htmlFor='learn-guess-input'>
             What's the translation for this word?
@@ -77,6 +92,7 @@ class LearningRoute extends Component {
   // user results function
   userResults = () => {
     let head = this.context.head;
+    console.log(this.context.response, 'THIS CONTEXT response');
     let response = this.context.response;
 
     return (
@@ -95,8 +111,8 @@ class LearningRoute extends Component {
           <h4>
             Incorrect:
             {response.isCorrect
-              ? head.wordIncorrectCount
-              : head.wordIncorrectCount + 1}
+              ? response.wordIncorrectCount
+              : response.wordIncorrectCount + 1}
           </h4>
         </div>
 
@@ -104,14 +120,14 @@ class LearningRoute extends Component {
           <h4>
             Correct:
             {response.isCorrect
-              ? head.wordCorrectCount + 1
-              : head.wordCorrectCount}
+              ? response.wordCorrectCount + 1
+              : response.wordCorrectCount}
           </h4>
         </div>
         <span className='word-style'>{head.nextWord}</span>
         <div className='DisplayFeedback'>
           <p>
-            The correct translation for {head.nextWord} was {response.answer}{' '}
+            The correct translation for {head.nextWord} was {head.translation}{' '}
             and you chose {this.state.guess}!
           </p>
         </div>
@@ -122,9 +138,9 @@ class LearningRoute extends Component {
   };
 
   render() {
-    let renderForm = this.state.renderForm;
+    let displayForm = this.state.renderForm;
     return (
-      <section>{renderForm ? this.renderForm() : this.userResults()}</section>
+      <section>{displayForm ? this.renderForm() : this.userResults()}</section>
     );
   }
 }

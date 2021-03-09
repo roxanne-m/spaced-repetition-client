@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 const LangContext = React.createContext({
-  language: [],
+  language: {},
   error: null,
   words: [],
-  head: [],
+  head: {},
   response: [],
   guess: '',
 
@@ -15,6 +15,8 @@ const LangContext = React.createContext({
   setGuess: () => {},
   setError: () => {},
   clearError: () => {},
+  setTotalScore: () => {},
+  getWordByOriginal: () => {},
 });
 
 export default LangContext;
@@ -24,20 +26,21 @@ export class LangProvider extends Component {
     language: {},
     error: null,
     words: [],
-    head: [],
+    head: {},
     response: [],
+    totalScore: 0,
   };
 
   setLanguage = (language) => {
-    this.setState({ language });
+    this.setState({ language, totalScore: language.total_score });
   };
 
   setWords = (words) => {
     this.setState({ words });
   };
 
-  setHead = (head) => {
-    this.setState({ head });
+  setHead = (head, callback) => {
+    this.setState({ head }, callback);
   };
 
   setResponse = (response) => {
@@ -56,6 +59,14 @@ export class LangProvider extends Component {
     this.setState({ error: null });
   };
 
+  setTotalScore = (newTotalScore) => {
+    this.setState({ totalScore: newTotalScore });
+  };
+
+  getWordByOriginal = (original) => {
+    return this.state.words.find((word) => word.original === original);
+  };
+
   render() {
     const value = {
       language: this.state.language,
@@ -64,6 +75,7 @@ export class LangProvider extends Component {
       head: this.state.head,
       response: this.state.response,
       guess: this.state.guess,
+      totalScore: this.state.totalScore,
 
       setLanguage: this.setLanguage,
       setWords: this.setWords,
@@ -72,6 +84,8 @@ export class LangProvider extends Component {
       setGuess: this.setGuess,
       setError: this.setError,
       clearError: this.clearError,
+      getWordByOriginal: this.getWordByOriginal,
+      setTotalScore: this.setTotalScore,
     };
     return (
       <LangContext.Provider value={value}>
