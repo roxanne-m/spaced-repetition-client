@@ -34,7 +34,7 @@ class DashboardRoute extends Component {
         <h2>{`Language: ${this.context.language.name}`}</h2>
         <h3>{`Words to practice`}</h3>
         <ul>{wordListArray}</ul>
-        <p>{`Total correct answers: ${this.context.language.total_score}`}</p>
+        <p>{`Total correct answers: ${this.context.language.totalScore}`}</p>
 
         <Link to='/learn'>
           <button>Start practicing</button>

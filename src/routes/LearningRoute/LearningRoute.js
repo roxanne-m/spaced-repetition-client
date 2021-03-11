@@ -12,16 +12,26 @@ class LearningRoute extends Component {
     guess: '',
     renderForm: true,
   };
-  async componentDidMount() {
+  componentWillMount() {
     this.context.clearError();
-    await languageApiService.getLanguageHead().then((res) => {
-      this.context.setHead(res);
-    });
 
-    await languageApiService.getWords().then((res) => {
-      this.context.setLanguage(res.language);
-      this.context.setWords(res.words);
-    });
+    languageApiService
+      .getWords()
+      .then((res) => {
+        this.context.setLanguage(res.language);
+        this.context.setCurrentWord(
+          this.context.getWordById(res.language.head).original
+        );
+        this.context.setWords(res.words);
+      })
+      .catch((error) => {});
+
+    languageApiService
+      .getLanguageHead()
+      .then((res) => {
+        this.context.setHead(res);
+      })
+      .catch((error) => {});
   }
 
   handleOnChange = (e) => {
@@ -34,13 +44,17 @@ class LearningRoute extends Component {
     languageApiService.postGuess(this.state.guess).then((res) => {
       this.context.setResponse(res);
       this.setState({ renderForm: false });
-
-      this.context.setTotalScore(res.totalScore); // updates total score
     });
   };
 
   handleNextWord = (e) => {
-    this.context.setGuess('');
+    languageApiService.getWords().then((data) => {
+      this.context.setCurrentWord(
+        this.context.getWordById(data.language.head).original
+      );
+    });
+    this.setState({ guess: '' });
+
     languageApiService.getLanguageHead().then((res) => {
       this.context.setHead(res, () => this.setState({ renderForm: true }));
     });
@@ -49,24 +63,30 @@ class LearningRoute extends Component {
   // Function to render form
   renderForm = () => {
     let { head } = this.context;
-    // let headWord;
+
     let correctCount;
     let incorrectCount;
-    // let totalScore;
-    if (head.nextWord) {
-      // headWord = head.original;
-      correctCount = head.wordCorrectCount;
-      incorrectCount = head.wordIncorrectCount;
-    }
 
+    correctCount = head.wordCorrectCount;
+    incorrectCount = head.wordIncorrectCount;
+
+    let totalScore = this.context.response.totalScore || head.totalScore;
+    let currentWord = this.context.currentWord;
+    if (currentWord === '') {
+      if (this.context.response.nextWord) {
+        currentWord = this.context.response.nextWord;
+      } else {
+        currentWord = head.nextWord;
+      }
+    }
     return (
       <section>
         <h2>Translate the word:</h2>
         <span>
-          <h3>{head.nextWord}</h3>
+          <h3>{currentWord}</h3>
         </span>
 
-        <p>{`Your total score is: ${this.context.totalScore}`}</p>
+        <p>{`Your total score is: ${totalScore}`}</p>
         <form onSubmit={this.handleOnSubmit}>
           <Label htmlFor='learn-guess-input'>
             What's the translation for this word?
@@ -74,7 +94,7 @@ class LearningRoute extends Component {
           <Input
             type='text'
             id='learn-guess-input'
-            value={this.state.userGuess}
+            value={this.state.guess}
             onChange={this.handleOnChange}
             required
           />
@@ -91,10 +111,16 @@ class LearningRoute extends Component {
 
   // user results function
   userResults = () => {
-    let head = this.context.head;
-    console.log(this.context.response, 'THIS CONTEXT response');
     let response = this.context.response;
 
+    let currentWord = this.context.currentWord;
+    if (currentWord === '') {
+      if (this.context.head.nextWord) {
+        currentWord = this.context.head.nextWord;
+      } else {
+        currentWord = this.context.response.nextWord;
+      }
+    }
     return (
       <section>
         <h2>
@@ -110,25 +136,21 @@ class LearningRoute extends Component {
         <div>
           <h4>
             Incorrect:
-            {response.isCorrect
-              ? response.wordIncorrectCount
-              : response.wordIncorrectCount + 1}
+            {response.wordIncorrectCount}
           </h4>
         </div>
 
         <div>
           <h4>
             Correct:
-            {response.isCorrect
-              ? response.wordCorrectCount + 1
-              : response.wordCorrectCount}
+            {response.wordCorrectCount}
           </h4>
         </div>
-        <span className='word-style'>{head.nextWord}</span>
+        <span className='word-style'>{currentWord}</span>
         <div className='DisplayFeedback'>
           <p>
-            The correct translation for {head.nextWord} was {head.translation}{' '}
-            and you chose {this.state.guess}!
+            The correct translation for {currentWord} was {response.answer} and
+            you chose {this.state.guess}!
           </p>
         </div>
 

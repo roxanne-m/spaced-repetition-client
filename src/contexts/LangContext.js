@@ -6,7 +6,7 @@ const LangContext = React.createContext({
   words: [],
   head: {},
   response: [],
-  guess: '',
+  currentWord: '',
 
   setLanguage: () => {},
   setWords: () => {},
@@ -15,8 +15,10 @@ const LangContext = React.createContext({
   setGuess: () => {},
   setError: () => {},
   clearError: () => {},
-  setTotalScore: () => {},
+
   getWordByOriginal: () => {},
+  setCurrentWord: () => {},
+  getWordById: () => {},
 });
 
 export default LangContext;
@@ -27,16 +29,20 @@ export class LangProvider extends Component {
     error: null,
     words: [],
     head: {},
-    response: [],
-    totalScore: 0,
+    response: {},
+    currentWord: '',
   };
 
-  setLanguage = (language) => {
-    this.setState({ language, totalScore: language.total_score });
+  setCurrentWord = (word) => {
+    this.setState({ currentWord: word });
   };
 
-  setWords = (words) => {
-    this.setState({ words });
+  setLanguage = (language, callback) => {
+    this.setState({ language }, callback);
+  };
+
+  setWords = (words, callback) => {
+    this.setState({ words }, callback);
   };
 
   setHead = (head, callback) => {
@@ -59,14 +65,13 @@ export class LangProvider extends Component {
     this.setState({ error: null });
   };
 
-  setTotalScore = (newTotalScore) => {
-    this.setState({ totalScore: newTotalScore });
-  };
-
   getWordByOriginal = (original) => {
     return this.state.words.find((word) => word.original === original);
   };
 
+  getWordById = (id) => {
+    return this.state.words.find((word) => word.id === id);
+  };
   render() {
     const value = {
       language: this.state.language,
@@ -75,8 +80,9 @@ export class LangProvider extends Component {
       head: this.state.head,
       response: this.state.response,
       guess: this.state.guess,
-      totalScore: this.state.totalScore,
+      currentWord: this.state.currentWord,
 
+      setCurrentWord: this.setCurrentWord,
       setLanguage: this.setLanguage,
       setWords: this.setWords,
       setHead: this.setHead,
@@ -85,7 +91,7 @@ export class LangProvider extends Component {
       setError: this.setError,
       clearError: this.clearError,
       getWordByOriginal: this.getWordByOriginal,
-      setTotalScore: this.setTotalScore,
+      getWordById: this.getWordById,
     };
     return (
       <LangContext.Provider value={value}>
