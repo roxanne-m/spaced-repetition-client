@@ -17,19 +17,19 @@ Spaced Repetition is an app that allows users to learn the Spanish language usin
 
 - User can register using their name, a username, and a password. The password must be 8 characters long, must contain one upper case, lower case, number, and special character.
 
-![register](https://user-images.githubusercontent.com/70825798/110029429-4f06c500-7ce9-11eb-9d7b-4127334d99f5.JPG)
+![register](https://user-images.githubusercontent.com/70825798/110720659-d1005d80-81c3-11eb-86aa-c10c1d468210.JPG)
 
 - As a returning user, the user may login using their username and password.
 
-![login](https://user-images.githubusercontent.com/70825798/110029477-5d54e100-7ce9-11eb-8d45-23fb016e2306.JPG)
+![login](https://user-images.githubusercontent.com/70825798/110720681-dd84b600-81c3-11eb-885c-10f55f353af4.JPG)
 
 - Once logged in, the user will view their dashboard that provides the following information: Language, a list of words to practice, the total amount of correct and incorrect times the user has answered for a specified word, and their total amount of correct answers.
 
-![dashboard](https://user-images.githubusercontent.com/70825798/110029704-a3aa4000-7ce9-11eb-9408-75a3d745be42.JPG)
+![dashboard](https://user-images.githubusercontent.com/70825798/110720723-ec6b6880-81c3-11eb-8738-cfbe9fb497e8.JPG)
 
 - When beginning their practice, the user will be prompted to a screen that displays a word to be translated, their total score, and their total tally for correct and incorrect answers for the given word. After answering, the user will be prompted to a results page that will inform them whether or not their answer was correct.
 
-![attempt](https://user-images.githubusercontent.com/70825798/110029943-f1bf4380-7ce9-11eb-81e8-d5075dc570c2.JPG)
+![attempt](https://user-images.githubusercontent.com/70825798/110720750-f725fd80-81c3-11eb-8294-3e2709f8db71.JPG)
 
 ## Tech Stacks Used
 
